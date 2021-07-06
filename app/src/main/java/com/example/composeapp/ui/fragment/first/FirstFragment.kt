@@ -30,7 +30,7 @@ fun FirstFragment(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.LightGray)
+                .background(Color.White)
         ) {
             items(
                 items = puppies,

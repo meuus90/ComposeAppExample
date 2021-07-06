@@ -37,13 +37,13 @@ private fun PuppyView(navController: NavController, puppy: Puppy) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color.LightGray),
+            .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PuppyImage(puppy)
         Text(
             text = puppy.title,
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 4.dp)
