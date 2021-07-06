@@ -3,36 +3,33 @@ package com.example.composeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.composeapp.ui.fragment.first.FirstFragment
+import com.example.composeapp.ui.fragment.second.SecondFragment
+import com.example.composeapp.ui.navigation.NavigationScreen
 import com.example.composeapp.ui.theme.ComposeAppTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                val navController = rememberNavController()
+
+                NavHost(navController, startDestination = NavigationScreen.SCREEN_1.name) {
+                    composable(NavigationScreen.SCREEN_1.name) {
+                        FirstFragment(navController)
+                    }
+
+                    composable(NavigationScreen.SCREEN_2.name) {
+                        SecondFragment(navController)
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ComposeAppTheme {
-        Greeting("Android")
     }
 }
