@@ -1,4 +1,4 @@
-package com.example.composeapp.ui.fragment.first
+package com.example.composeapp.ui.view.first
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues

@@ -1,4 +1,4 @@
-package com.example.composeapp.ui.fragment.first
+package com.example.composeapp.ui.view.first
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

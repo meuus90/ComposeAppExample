@@ -1,4 +1,4 @@
-package com.example.composeapp.ui.fragment.second
+package com.example.composeapp.ui.view.second
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,11 +28,11 @@ fun SecondFragment(navController: NavController) {
     val puppy = navController.previousBackStackEntry
         ?.arguments?.getParcelable<Puppy>("puppy")
 
-    puppy?.let { PuppyView(navController, it) }
+    puppy?.let { SecondView(navController, it) }
 }
 
 @Composable
-private fun PuppyView(navController: NavController, puppy: Puppy) {
+private fun SecondView(navController: NavController, puppy: Puppy) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,6 +87,6 @@ private fun PuppyImage(puppy: Puppy) {
 fun DefaultPreview() {
     ComposeAppTheme {
         val navController = rememberNavController()
-        PuppyView(navController, SampleData.puppyList[0])
+        SecondView(navController, SampleData.puppyList[0])
     }
 }
