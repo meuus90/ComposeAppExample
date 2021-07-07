@@ -1,4 +1,4 @@
-package com.example.composeapp.ui.view.first
+package com.example.composeapp.presentation.view.first
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,8 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composeapp.SampleData
-import com.example.composeapp.data.model.Puppy
-import com.example.composeapp.ui.theme.whiteSurface
+import com.example.composeapp.datasource.model.Puppy
+import com.example.composeapp.presentation.theme.whiteSurface
 
 @Composable
 fun PuppyListItem(puppy: Puppy, navigateToProfile: (Puppy) -> Unit) {

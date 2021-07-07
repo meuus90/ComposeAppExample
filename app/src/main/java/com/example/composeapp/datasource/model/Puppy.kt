@@ -1,4 +1,4 @@
-package com.example.composeapp.data.model
+package com.example.composeapp.datasource.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -9,4 +9,4 @@ data class Puppy(
     val title: String,
     val description: String,
     val puppyImageId: Int = 0
-): Parcelable
+) : Parcelable

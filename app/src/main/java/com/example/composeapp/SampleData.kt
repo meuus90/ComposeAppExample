@@ -1,6 +1,6 @@
 package com.example.composeapp
 
-import com.example.composeapp.data.model.Puppy
+import com.example.composeapp.datasource.model.Puppy
 
 object SampleData {
     val Animals = listOf(

@@ -1,4 +1,4 @@
-package com.example.composeapp.ui.view.second
+package com.example.composeapp.presentation.view.second
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,6 +9,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,15 +22,28 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.composeapp.SampleData
-import com.example.composeapp.data.model.Puppy
-import com.example.composeapp.ui.theme.ComposeAppTheme
+import com.example.composeapp.datasource.model.Puppy
+import com.example.composeapp.presentation.theme.ComposeAppTheme
+import com.example.composeapp.presentation.viewmodel.puppy.SharedPuppyViewModel
+import javax.inject.Inject
+
+@Inject
+internal lateinit var sharedPuppyViewModel: SharedPuppyViewModel
 
 @Composable
 fun SecondFragment(navController: NavController) {
-    val puppy = navController.previousBackStackEntry
-        ?.arguments?.getParcelable<Puppy>("puppy")
+    val puppy = remember { mutableStateOf<Puppy?>(null) }
+    sharedPuppyViewModel.shared {
+        puppy.value = it
+    }
+    puppy.value?.let {
+        SecondView(navController, it)
+    }
 
-    puppy?.let { SecondView(navController, it) }
+//    val puppy = navController.previousBackStackEntry
+//        ?.arguments?.getParcelable<Puppy>("puppy")
+//
+//    puppy?.let { SecondView(navController, it) }
 }
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.composeapp.ui.view.first
+package com.example.composeapp.presentation.view.first
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,11 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.composeapp.SampleData
-import com.example.composeapp.ui.navigation.NavigationScreen
-import com.example.composeapp.ui.theme.ComposeAppTheme
+import com.example.composeapp.presentation.navigation.NavigationScreen
+import com.example.composeapp.presentation.theme.ComposeAppTheme
+import com.example.composeapp.presentation.viewmodel.puppy.SharedPuppyViewModel
+import javax.inject.Inject
+
+@Inject
+internal lateinit var sharedPuppyViewModel: SharedPuppyViewModel
 
 @Composable
 fun FirstFragment(navController: NavController) {
@@ -36,8 +40,9 @@ fun FirstFragment(navController: NavController) {
                 items = puppies,
                 itemContent = {
                     PuppyListItem(puppy = it) { puppy ->
-                        navController.currentBackStackEntry
-                            ?.arguments?.putParcelable("puppy", puppy)
+//                        navController.currentBackStackEntry
+//                            ?.arguments?.putParcelable("puppy", puppy)
+                        sharedPuppyViewModel.share(puppy)
                         navController.navigate(NavigationScreen.SCREEN_2.name)
                     }
                 }
