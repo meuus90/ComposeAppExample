@@ -20,34 +20,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.composeapp.SampleData
 import com.example.composeapp.datasource.model.Puppy
 import com.example.composeapp.presentation.theme.ComposeAppTheme
-import com.example.composeapp.presentation.viewmodel.puppy.SharedPuppyViewModel
-import javax.inject.Inject
-
-@Inject
-internal lateinit var sharedPuppyViewModel: SharedPuppyViewModel
+import com.example.composeapp.presentation.viewmodel.SharedViewModel
 
 @Composable
-fun SecondFragment(navController: NavController) {
+fun SecondFragment(navController: NavController, sharedViewModel: SharedViewModel) {
     val puppy = remember { mutableStateOf<Puppy?>(null) }
-    sharedPuppyViewModel.shared {
-        puppy.value = it
+    sharedViewModel.shared {
+        puppy.value = it.param as Puppy
     }
     puppy.value?.let {
-        SecondView(navController, it)
+        SecondView(it) {
+            navController.popBackStack()
+        }
     }
-
-//    val puppy = navController.previousBackStackEntry
-//        ?.arguments?.getParcelable<Puppy>("puppy")
-//
-//    puppy?.let { SecondView(navController, it) }
 }
 
 @Composable
-private fun SecondView(navController: NavController, puppy: Puppy) {
+private fun SecondView(puppy: Puppy, onButtonClicked: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,8 +64,7 @@ private fun SecondView(navController: NavController, puppy: Puppy) {
         Spacer(modifier = Modifier.weight(1F))
         Button(
             onClick = {
-//                navController.navigate(NavigationScreen.SCREEN_1.name)
-                navController.popBackStack()
+                onButtonClicked()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -101,7 +92,6 @@ private fun PuppyImage(puppy: Puppy) {
 @Composable
 fun DefaultPreview() {
     ComposeAppTheme {
-        val navController = rememberNavController()
-        SecondView(navController, SampleData.puppyList[0])
+        SecondView(SampleData.puppyList[0]) {}
     }
 }

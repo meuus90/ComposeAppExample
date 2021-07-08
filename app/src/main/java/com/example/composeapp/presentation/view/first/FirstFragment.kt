@@ -14,20 +14,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.navigate
 import com.example.composeapp.SampleData
+import com.example.composeapp.datasource.model.Puppy
 import com.example.composeapp.presentation.navigation.NavigationScreen
 import com.example.composeapp.presentation.theme.ComposeAppTheme
-import com.example.composeapp.presentation.viewmodel.puppy.SharedPuppyViewModel
-import javax.inject.Inject
-
-@Inject
-internal lateinit var sharedPuppyViewModel: SharedPuppyViewModel
+import com.example.composeapp.presentation.viewmodel.SharedViewModel
 
 @Composable
-fun FirstFragment(navController: NavController) {
+fun FirstFragment(navController: NavController, sharedViewModel: SharedViewModel) {
     val puppies = remember { SampleData.puppyList }
+    FirstView(puppies) { puppy ->
+        sharedViewModel.share(puppy)
+        navController.navigate(NavigationScreen.SCREEN_2.name)
+    }
+}
 
+
+@Composable
+private fun FirstView(
+    puppies: List<Puppy>,
+    onItemClicked: (puppy: Puppy) -> Unit
+) {
     MaterialTheme {
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
@@ -40,10 +48,7 @@ fun FirstFragment(navController: NavController) {
                 items = puppies,
                 itemContent = {
                     PuppyListItem(puppy = it) { puppy ->
-//                        navController.currentBackStackEntry
-//                            ?.arguments?.putParcelable("puppy", puppy)
-                        sharedPuppyViewModel.share(puppy)
-                        navController.navigate(NavigationScreen.SCREEN_2.name)
+                        onItemClicked(puppy)
                     }
                 }
             )
@@ -55,7 +60,7 @@ fun FirstFragment(navController: NavController) {
 @Composable
 fun DefaultPreview() {
     ComposeAppTheme {
-        val navController = rememberNavController()
-        FirstFragment(navController)
+        val puppies = remember { SampleData.puppyList }
+        FirstView(puppies) {}
     }
 }

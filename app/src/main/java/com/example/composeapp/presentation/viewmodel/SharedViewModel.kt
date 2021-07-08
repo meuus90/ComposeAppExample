@@ -5,24 +5,26 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-open class SharedViewModel<T> : ViewModel() {
-    private var sharedData: SharedFlow<T>? = null
+class SharedViewModel : ViewModel() {
+    private var sharedDataFlow: SharedFlow<SharedData>? = null
 
-    internal fun share(data: T) {
-        sharedData = flow {
-            emit(data)
+    internal fun <T : Any> share(data: T) {
+        sharedDataFlow = flow {
+            emit(SharedData(data))
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = data
+            initialValue = SharedData(data)
         )
     }
 
-    internal fun shared(doOnResult: (data: T) -> Unit) {
+    internal fun shared(doOnResult: (data: SharedData) -> Unit) {
         viewModelScope.launch {
-            sharedData?.collectLatest { data ->
-                data?.let { doOnResult(data) }
+            sharedDataFlow?.collectLatest { data ->
+                doOnResult(data)
             }
         }
     }
 }
+
+data class SharedData(val param: Any)

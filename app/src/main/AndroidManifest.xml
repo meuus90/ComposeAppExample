@@ -3,7 +3,6 @@
     package="com.example.composeapp">
 
     <application
-        android:name=".ComposeApp"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
