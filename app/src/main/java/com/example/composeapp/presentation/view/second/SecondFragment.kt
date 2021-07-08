@@ -19,18 +19,29 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.composeapp.SampleData
+import com.example.composeapp.datasource.model.Params
 import com.example.composeapp.datasource.model.Puppy
 import com.example.composeapp.presentation.theme.ComposeAppTheme
+import com.example.composeapp.presentation.viewmodel.PuppyViewModel
 import com.example.composeapp.presentation.viewmodel.SharedViewModel
 
 @Composable
-fun SecondFragment(navController: NavController, sharedViewModel: SharedViewModel) {
+fun SecondFragment(
+    navController: NavController,
+    sharedViewModel: SharedViewModel,
+    viewModel: PuppyViewModel = viewModel(PuppyViewModel::class.java)
+) {
     val puppy = remember { mutableStateOf<Puppy?>(null) }
+
     sharedViewModel.shared {
-        puppy.value = it.param as Puppy
+        viewModel.getPuppy(Params(it.param as Int)) { p ->
+            puppy.value = p
+        }
     }
+
     puppy.value?.let {
         SecondView(it) {
             navController.popBackStack()
