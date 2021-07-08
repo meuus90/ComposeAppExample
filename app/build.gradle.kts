@@ -51,12 +51,18 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = rootProject.extra["compose_version"] as String
-        kotlinCompilerVersion = "1.4.32"
+//        kotlinCompilerVersion = "1.4.32"
     }
 
     packagingOptions {
         resources.excludes += "META-INF/AL2.0"
         resources.excludes += "META-INF/LGPL2.1"
+    }
+}
+
+kapt {
+    javacOptions {
+        option("-Xmaxerrs", 1000)
     }
 }
 
@@ -89,7 +95,7 @@ dependencies {
     implementation("com.google.dagger:dagger:${rootProject.extra["dagger_version"]}")
     implementation("com.google.dagger:dagger-android:${rootProject.extra["dagger_version"]}")
     implementation("com.google.dagger:dagger-android-support:${rootProject.extra["dagger_version"]}")
-//    annotationProcessor("com.google.dagger:dagger-android-processor:${rootProject.extra["dagger_version"]}")
+    annotationProcessor("com.google.dagger:dagger-android-processor:${rootProject.extra["dagger_version"]}")
     kapt("com.google.dagger:dagger-compiler:${rootProject.extra["dagger_version"]}")
     kapt("com.google.dagger:dagger-android-processor:${rootProject.extra["dagger_version"]}")
 
