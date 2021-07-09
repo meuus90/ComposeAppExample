@@ -1,5 +1,7 @@
 package com.example.composeapp.presentation.view.second
 
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -32,8 +34,9 @@ import com.example.composeapp.presentation.viewmodel.SharedViewModel
 fun SecondFragment(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    viewModel: PuppyViewModel = viewModel(PuppyViewModel::class.java)
+    activity: ComponentActivity
 ) {
+    val viewModel: PuppyViewModel by activity.viewModels()
     val puppy = remember { mutableStateOf<Puppy?>(null) }
 
     sharedViewModel.shared {

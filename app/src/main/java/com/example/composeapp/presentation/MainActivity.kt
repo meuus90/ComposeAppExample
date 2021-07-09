@@ -11,7 +11,6 @@ import com.example.composeapp.presentation.navigation.NavigationScreen
 import com.example.composeapp.presentation.theme.ComposeAppTheme
 import com.example.composeapp.presentation.view.first.FirstFragment
 import com.example.composeapp.presentation.view.second.SecondFragment
-import com.example.composeapp.presentation.viewmodel.PuppyViewModel
 import com.example.composeapp.presentation.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,18 +20,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val sharedViewModel: SharedViewModel by viewModels()
-            val viewModel: PuppyViewModel by viewModels()
 
             ComposeAppTheme {
                 val navController = rememberNavController()
 
                 NavHost(navController, startDestination = NavigationScreen.SCREEN_1.name) {
                     composable(NavigationScreen.SCREEN_1.name) {
-                        FirstFragment(navController, sharedViewModel, viewModel)
+                        FirstFragment(navController, sharedViewModel, this@MainActivity)
                     }
 
                     composable(NavigationScreen.SCREEN_2.name) {
-                        SecondFragment(navController, sharedViewModel, viewModel)
+                        SecondFragment(navController, sharedViewModel, this@MainActivity)
                     }
                 }
             }

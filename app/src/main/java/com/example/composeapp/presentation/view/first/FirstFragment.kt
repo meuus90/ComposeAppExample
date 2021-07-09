@@ -1,5 +1,7 @@
 package com.example.composeapp.presentation.view.first
 
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.example.composeapp.SampleData
@@ -30,8 +31,9 @@ import com.example.composeapp.presentation.viewmodel.SharedViewModel
 fun FirstFragment(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    viewModel: PuppyViewModel = viewModel(PuppyViewModel::class.java)
+    activity: ComponentActivity
 ) {
+    val viewModel: PuppyViewModel by activity.viewModels()
     val puppyList = remember { mutableStateOf(listOf<Puppy>()) }
 
     viewModel.getPuppies(Params()) { l ->
